@@ -1,4 +1,12 @@
 import * as React from "react";
+import {
+  useNavigate,
+  Link,
+} from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
+import { AppContext } from "../App";
+import { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,9 +22,9 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
 const pages = ["Favorite", "Filter", "Friends"];
-const settings = ["Account", "Logout"];
 
 function ResponsiveAppBar() {
+  const { accessToken } = useContext(AppContext);
   const [anchorElNav, setAnchorElNav] =
     React.useState(null);
   const [anchorElUser, setAnchorElUser] =
@@ -37,6 +45,44 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const { setAccessToken } =
+    useContext(AppContext);
+  const navigate = useNavigate();
+
+  const handleLogo = () => {
+    navigate(
+      `/privatepage/${
+        jwt_decode(accessToken).userId
+      }`
+    );
+  };
+
+  const logout = async () => {
+    try {
+      const response = await axios.delete(
+        "/logout",
+        {},
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("logout=>", response);
+      if (
+        response.status == 204 ||
+        response.status == 200
+      ) {
+        setAccessToken(null);
+        navigate("/login");
+      }
+    } catch (e) {
+      console.log(e);
+      navigate("/login");
+    }
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -51,7 +97,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/privatepage/${decode.userId}"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -135,6 +181,7 @@ function ResponsiveAppBar() {
               color: "inherit",
               textDecoration: "none",
             }}
+            onClick={handleLogo}
           >
             LOGO
           </Typography>
@@ -165,10 +212,7 @@ function ResponsiveAppBar() {
                 onClick={handleOpenUserMenu}
                 sx={{ p: 0 }}
               >
-                <Avatar
-                  alt="Remy Sharp"
-                  src="/static/images/avatar/2.jpg"
-                />
+                <Avatar alt="Remy Sharp" src="" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -187,16 +231,14 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={handleCloseUserMenu}
-                >
-                  <Typography textAlign="center">
-                    {setting}
-                  </Typography>
-                </MenuItem>
-              ))}
+              <MenuItem
+                key={"logout"}
+                onClick={logout}
+              >
+                <Typography textAlign="center">
+                  Logout
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

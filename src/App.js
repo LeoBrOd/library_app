@@ -4,8 +4,12 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar.js";
 // import axios from "axios";
 // import GOOGLE_API_KEY from "./Constants";
+import { Auth } from "./authentification/Auth.js";
 import RegisterLogin from "./components/RegisterLogin.js";
 import Home from "./components/Home.js";
+import PrivatePage from "./components/PrivatePage.js";
+import AddBook from "./components/AddBook";
+import Book from "./components/Book";
 
 export const AppContext = createContext(null);
 
@@ -31,9 +35,15 @@ function App() {
       value={{ accessToken, setAccessToken }}
     >
       <div className="App">
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/privatepage/:id"
+            element={
+              <Auth>
+                <PrivatePage />
+              </Auth>
+            }
+          />
           <Route
             path="/login"
             element={
@@ -44,6 +54,23 @@ function App() {
             path="/register"
             element={
               <RegisterLogin title="Register" />
+            }
+          />
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/addbook"
+            element={
+              <Auth>
+                <AddBook />
+              </Auth>
+            }
+          />
+          <Route
+            path="/books/:id"
+            element={
+              <Auth>
+                <Book />
+              </Auth>
             }
           />
         </Routes>

@@ -1,4 +1,4 @@
-import Users from "../model/UsersModel";
+import Users from "../model/UsersModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -12,10 +12,10 @@ export const register = async (req, res) => {
     birthday,
     // picture,
   } = req.body;
+  // console.log(password);
   const salt = await bcrypt.genSalt();
-  const passwordToString = password.toString();
   const hashPassword = await bcrypt.hash(
-    passwordToString,
+    password,
     salt
   );
   try {
@@ -45,8 +45,8 @@ export const login = async (req, res) => {
       },
     });
     const match = await bcrypt.compare(
-      req.body.password.toString(),
-      user[0].password.toString()
+      req.body.password,
+      user[0].password
     );
     if (!match)
       return res
@@ -54,12 +54,17 @@ export const login = async (req, res) => {
         .json({ msg: "Wrong Password!" });
     const userId = user[0].id;
     const email = user[0].email;
+    const userName = user[0].userName;
     const accessToken = jwt.sign(
-      { userId, email },
+      { userId, email, userName },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "1200s" }
     );
-    res.coolie("accessToken", accessToken, {
+    console.log(
+      "accessToken from login Form",
+      accessToken
+    );
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
       maxAge: 1200 * 1000,
     });

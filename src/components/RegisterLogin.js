@@ -1,15 +1,16 @@
 import * as React from "react";
+import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
+import jwt_decode from "jwt-decode";
+import Navbar from "./Navbar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 
-import { AppContext } from "../App";
-import { areOptionsEqual } from "@mui/base";
-
 const FormDialog = (props) => {
+  const { accessToken } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -24,7 +25,7 @@ const FormDialog = (props) => {
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    if (props.title == "Register") {
+    if (props.title === "Register") {
       try {
         const response = await axios.post(
           "/register",
@@ -39,7 +40,7 @@ const FormDialog = (props) => {
           {
             withCredentials: true,
             headers: {
-              "Content-Type": "applicaation/json",
+              "Content-Type": "application/json",
             },
           }
         );
@@ -57,24 +58,23 @@ const FormDialog = (props) => {
           {
             withCredentials: true,
             headers: {
-              "Content-Type": "applicaation/json",
+              "Content-Type": "application/json",
             },
           }
         );
-        console.log(
-          "response=>",
-          response.data.token
-        );
         setAccessToken(response.data.token);
-        navigate("/");
+        const decode = jwt_decode(accessToken);
+        console.log("hi");
+        navigate(`/privatepage/${decode.userId}`);
       } catch (e) {
-        setMsg(e.response.data.msg);
+        console.log(e);
       }
     }
   };
   if (props.title == "Register") {
     return (
       <div>
+        <Navbar />
         <div>
           <h3>{props.title}</h3>
         </div>
@@ -171,6 +171,7 @@ const FormDialog = (props) => {
   } else {
     return (
       <div>
+        <Navbar />
         <div>
           <h3>{props.title}</h3>
         </div>

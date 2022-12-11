@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import dataBase from "./config/database.js";
-import router from "./routes/Users.js";
+import router from "./routes/UsersAndLibrary.js";
 import path from "path";
 
 dotenv.config();
