@@ -40,7 +40,7 @@ app.use(
   express.static(path.join(_dirname, "./build"))
 );
 
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(
     path.resolve(
       _dirname,
