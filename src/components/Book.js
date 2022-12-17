@@ -37,8 +37,9 @@ export default function Book() {
   const [status, setStatus] =
     useState("wantToRead");
   const [favorite, setFavorite] =
-    useState("true");
+    useState("false");
   const navigate = useNavigate();
+  const [review, setReview] = useState();
 
   useEffect(() => {
     axios
@@ -58,8 +59,9 @@ export default function Book() {
       })
       .then((data) => {
         setIfBookExist(data.data);
+        setFavorite(data.data.favorite);
       });
-  }, [favorite]);
+  }, [favorite, status, review]);
 
   const handleStatus = async (e) => {
     try {
@@ -77,6 +79,7 @@ export default function Book() {
           },
         }
       );
+      setStatus(e.target.value);
     } catch (e) {
       console.log(e);
     }
@@ -98,6 +101,7 @@ export default function Book() {
           },
         }
       );
+      setFavorite("true");
     } catch (e) {
       console.log(e);
     }

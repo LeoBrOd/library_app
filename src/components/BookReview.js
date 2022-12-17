@@ -30,12 +30,6 @@ const BookReview = (props) => {
     setOpen(false);
   };
 
-  // const markFromChildElement = (mark) => {
-  //   setMark(mark);
-  // };
-
-  console.log(props);
-
   const handleSubmitReview = async () => {
     try {
       const response = await axios.put(
@@ -53,6 +47,7 @@ const BookReview = (props) => {
           },
         }
       );
+      setOpen(false);
     } catch (e) {
       console.log(e);
     }

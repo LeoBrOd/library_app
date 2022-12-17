@@ -11,11 +11,11 @@ dotenv.config();
 const app = express();
 const _dirname = path.resolve();
 
-app.use(cors());
-//       {
-//         credentials:true,
-//         origin:
-//     }
+app.use(cors(), {
+  credentials: true,
+  origin:
+    "https://leobrod.github.io/library_app/",
+});
 
 app.use(cookieParser());
 app.use(express.json());

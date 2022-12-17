@@ -80,9 +80,9 @@ const PrivateLibrary = (props) => {
                   }
                   alt={item.volumeInfo.title}
                   loading="lazy"
-                  onClick={(e) => {
-                    navigate(`/books/${item.id}`);
-                  }}
+                   onClick={(e) => {
+                    navigate(`/books/${item.id}`)}
+                  }
                 />
               </div>
             );
