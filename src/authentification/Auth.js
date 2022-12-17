@@ -1,16 +1,9 @@
 import axios from "axios";
-import {
-  useState,
-  useEffect,
-  useContext,
-} from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../App";
 
 export const Auth = (props) => {
   const [redirect, setRedirect] = useState(null);
-  const { setAccessToken } =
-    useContext(AppContext);
   const navigate = useNavigate();
   useEffect(() => {
     const verify = async () => {

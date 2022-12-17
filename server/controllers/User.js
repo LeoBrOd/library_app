@@ -58,7 +58,7 @@ export const login = async (req, res) => {
     const accessToken = jwt.sign(
       { userId, email, userName },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1200s" }
+      { expiresIn: "120000s" }
     );
     console.log(
       "accessToken from login Form",
@@ -66,9 +66,12 @@ export const login = async (req, res) => {
     );
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      maxAge: 1200 * 1000,
+      maxAge: 120000 * 1000,
     });
-    res.json({ token: accessToken });
+    res.json({
+      token: accessToken,
+      userId: userId,
+    });
   } catch (e) {
     console.log(e);
     res

@@ -3,7 +3,7 @@ export const Genres = [
   "Art",
   "Biography",
   "Business",
-  "Children's",
+  "Children",
   "Christian",
   "Classics",
   "Comics",

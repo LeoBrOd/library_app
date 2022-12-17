@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import PrivateNavbar from './PrivateNavbar'
-import Ranking from "./Ranking";
+import PrivateNavbar from "../PrivateNavbar";
+import Ranking from "../Ranking";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,7 +12,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
-import { AppContext } from "../App";
+import { AppContext } from "../../App";
 
 const FormDialog = (props) => {
   const [bookId, setBookId] = useState("");
@@ -59,7 +59,6 @@ const FormDialog = (props) => {
 
   return (
     <div>
-      <PrivateNavbar/>
       <Box
         component={"form"}
         sx={{ m: 1 }}

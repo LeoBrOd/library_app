@@ -1,36 +1,47 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import Toolbar from "@mui/material/Toolbar";
 
 export default function ButtonAppBar(props) {
   return (
-    <Stack spacing={2} direction="row">
-      <Typography
-        variant="h7"
-        sx={{ flexGrow: 1 }}
-        component={Link}
-        to="/"
-      >
-        Your favorite library app
-      </Typography>
-      <Button
-        color="inherit"
-        component={Link}
-        to="/register"
-      >
-        Register
-      </Button>
-      <Button
-        color="inherit"
-        component={Link}
-        to="/login"
-      >
-        Login
-      </Button>
-    </Stack>
+    <AppBar position="static">
+      <Toolbar>
+        <MenuBookIcon />
+        <Typography
+          variant="h5"
+          noWrap
+          sx={{
+            mr: 2,
+            flexGrow: 1,
+            fontWeight: 500,
+            color: "inherit",
+            textDecoration: "none",
+          }}
+          component={Link}
+          to="/"
+        >
+          Your favorite library app
+        </Typography>
+        <Button
+          color="inherit"
+          component={Link}
+          to="/register"
+        >
+          Register
+        </Button>
+        <Button
+          color="inherit"
+          component={Link}
+          to="/login"
+        >
+          Login
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 }

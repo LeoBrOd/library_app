@@ -3,7 +3,6 @@ import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import jwt_decode from "jwt-decode";
-import Navbar from "./Navbar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -44,7 +43,7 @@ const FormDialog = (props) => {
             },
           }
         );
-        console.log("response =>", response);
+        // console.log("response =>", response);
         setMsg("");
         navigate("/login");
       } catch (e) {
@@ -63,9 +62,9 @@ const FormDialog = (props) => {
           }
         );
         setAccessToken(response.data.token);
-        const decode = jwt_decode(accessToken);
-        console.log("hi");
-        navigate(`/privatepage/${decode.userId}`);
+        navigate(
+          `/privatepage/${response.data.userId}`
+        );
       } catch (e) {
         console.log(e);
       }
@@ -74,7 +73,6 @@ const FormDialog = (props) => {
   if (props.title == "Register") {
     return (
       <div>
-        <Navbar />
         <div>
           <h3>{props.title}</h3>
         </div>
@@ -171,7 +169,6 @@ const FormDialog = (props) => {
   } else {
     return (
       <div>
-        <Navbar />
         <div>
           <h3>{props.title}</h3>
         </div>

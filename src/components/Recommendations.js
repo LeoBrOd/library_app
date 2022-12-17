@@ -1,6 +1,6 @@
 import books from "../books.json";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {
   useNavigate,
@@ -15,27 +15,29 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
 export default function ImgMediaCard() {
-  const [recomendations, setRecomendations] =
+  const [recommendations, setRecommendations] =
     useState([]);
-  const [genre, setGenre] =
-    React.useState("fiction");
+  const [genre, setGenre] = useState("fiction");
   const [searchWord, setSearchWord] =
     useState("");
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    setGenre(event.target.value);
-  };
-  // axios
-  //   .get(
-  //     `https://www.googleapis.com/books/v1/volumes?q=${searchWord}&subject:${genre}&maxResults=10&key=${GOOGLE_API_KEY}`
-  //   )
-  //   .then((data) => console.log(data.data.items))
-  //   .catch((e) => console.log(e));
+  useEffect(() => {
+    axios
+      .get(
+        `https://www.googleapis.com/books/v1/volumes?q=${searchWord}+subject:${genre}&orderBy=newest&langRestrict=en&maxResults=10&key=${GOOGLE_API_KEY}`
+      )
+      .then((data) => {
+        setRecommendations(data.data.items);
+      })
+      .catch((e) => console.log(e));
+  }, [genre, searchWord]);
 
   return (
     <div>
-      <h2>Here some recommendations for you</h2>
+      <h2>
+        Here are some recommendations for you
+      </h2>
       <div>
         <FormControl
           sx={{
@@ -45,12 +47,15 @@ export default function ImgMediaCard() {
           }}
         >
           <TextField
+            sx={{ minWidth: 200 }}
             id="outlined-select-currency"
             select
             label="Genre"
             value={genre}
-            onChange={handleChange}
-            helperText="Please select your genre"
+            onChange={(e) => {
+              setGenre(e.target.value);
+            }}
+            // helperText="Please select your genre"
           >
             {Genres.map((item) => {
               return (
@@ -75,7 +80,7 @@ export default function ImgMediaCard() {
       </div>
       <Box
         sx={{
-          height: 255,
+          height: "auto",
           display: "block",
           maxWidth: "100%",
           overflow: "auto",
@@ -86,8 +91,11 @@ export default function ImgMediaCard() {
           spacing={1}
           sx={{ width: "75%" }}
         >
-          {books.map((item) => (
+          {recommendations.map((item) => (
             <img
+              style={{
+                height: "100px",
+              }}
               key={item.id}
               src={
                 item.volumeInfo.imageLinks

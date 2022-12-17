@@ -8,6 +8,9 @@ import {
 import {
   addbook,
   getbooks,
+  bookreview,
+  checkinlibrarybooks,
+  removebookfromlibrary,
 } from "../controllers/Library.js";
 import { VerifyToken } from "../middleware/VerifyToken.js";
 
@@ -21,6 +24,15 @@ router.get("/token", VerifyToken, (req, res) => {
   res.status(200).json({ msg: "OK" });
 });
 router.post("/addbook", addbook);
-router.get("/getbooks", VerifyToken, getbooks);
+router.put("/bookreview", bookreview);
+router.get("/getbooks", getbooks);
+router.get(
+  "/checkinlibrarybooks",
+  checkinlibrarybooks
+);
+router.delete(
+  "/removebookfromlibrary",
+  removebookfromlibrary
+);
 
 export default router;
