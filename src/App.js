@@ -9,6 +9,7 @@ import PrivatePage from "./components/PrivatePage.js";
 import AddBook from "./components/Old/AddBook.js";
 import Book from "./components/Book.js";
 import PrivateNavbar from "./components/PrivateNavbar.js";
+import BottomNavBar from "./components/BottomNavBar.js";
 
 export const AppContext = createContext(null);
 
@@ -60,6 +61,7 @@ function App() {
             }
           />
         </Routes>
+        <BottomNavBar />
       </div>
     </AppContext.Provider>
   );

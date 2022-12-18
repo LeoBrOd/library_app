@@ -20,18 +20,20 @@ export default function ImgMediaCard() {
   const [genre, setGenre] = useState("fiction");
   const [searchWord, setSearchWord] =
     useState("");
+  const [numberOfResulsts, setNumberOfResulsts] =
+    useState(10);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchWord}+subject:${genre}&orderBy=newest&langRestrict=en&maxResults=10&key=${GOOGLE_API_KEY}`
+        `https://www.googleapis.com/books/v1/volumes?q=${searchWord}+subject:${genre}&orderBy=newest&langRestrict=en&maxResults=${numberOfResulsts}&key=${GOOGLE_API_KEY}`
       )
       .then((data) => {
         setRecommendations(data.data.items);
       })
       .catch((e) => console.log(e));
-  }, [genre, searchWord]);
+  }, [genre, searchWord, numberOfResulsts]);
 
   return (
     <div>
@@ -76,6 +78,21 @@ export default function ImgMediaCard() {
               setSearchWord(e.target.value);
             }}
           />
+          <TextField
+            sx={{ minWidth: 200 }}
+            id="outlined-select-currency"
+            select
+            label="numberOfResulsts"
+            value={numberOfResulsts}
+            onChange={(e) => {
+              setNumberOfResulsts(e.target.value);
+            }}
+          >
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+            <MenuItem value={30}>30</MenuItem>
+            <MenuItem value={40}>40</MenuItem>
+          </TextField>
         </FormControl>
       </div>
       <Box
@@ -84,6 +101,7 @@ export default function ImgMediaCard() {
           display: "block",
           maxWidth: "100%",
           overflow: "auto",
+          margin: "10px",
         }}
       >
         <Stack

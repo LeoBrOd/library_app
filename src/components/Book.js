@@ -63,6 +63,10 @@ export default function Book() {
       });
   }, [favorite, status, review]);
 
+  const sendDataToParent = (review) => {
+    setReview(review);
+  };
+
   const handleStatus = async (e) => {
     try {
       const response = await axios.put(
@@ -318,6 +322,9 @@ export default function Book() {
               <BookReview
                 review={ifBookExist[0].review}
                 mark={ifBookExist[0].mark}
+                sendDataToParent={
+                  sendDataToParent
+                }
               />
             )}
         </Card>

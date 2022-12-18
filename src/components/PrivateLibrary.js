@@ -66,7 +66,8 @@ const PrivateLibrary = (props) => {
           sx={{
             display: "flex",
             flexDirection: "row",
-            maxWidth: "75%",
+            maxWidth: "65%",
+            justifyContent: "space-around",
           }}
         >
           {library.map((item) => {

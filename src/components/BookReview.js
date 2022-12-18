@@ -14,7 +14,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
-const BookReview = (props) => {
+const BookReview = (
+  props,
+  { sendDataToParent }
+) => {
   const params = useParams();
   const { accessToken } = useContext(AppContext);
   const [review, setReview] = useState();
@@ -48,6 +51,7 @@ const BookReview = (props) => {
         }
       );
       setOpen(false);
+      props.sendDataToParent(review);
     } catch (e) {
       console.log(e);
     }
