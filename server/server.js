@@ -15,7 +15,7 @@ app.use(
   cors({
     credentials: true,
     origin:
-      "https://leobrod.github.io/library_app/",
+      "https://git.heroku.com/yourfavoritelibrary.git",
   })
 );
 
